@@ -10,10 +10,10 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     private final int DELAY = 25;
     // controls the size of the board
     public static final int TILE_SIZE = 50;
-    public static final int ROWS = 12;
-    public static final int COLUMNS = 18;
+    public static final int ROWS = 6;
+    public static final int COLUMNS = 6;
     // controls how many coins appear on the board
-    public static final int NUM_COINS = 5;
+    public static final int NUM_COINS = 0;
     // suppress serialization warning
     private static final long serialVersionUID = 490905409104883233L;
     
@@ -22,6 +22,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     private Timer timer;
     // objects that appear on the game board
     private Player player;
+    private int dot;
     private ArrayList<Coin> coins;
 
     public Board() {
@@ -43,10 +44,14 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         // this method is called by the timer every DELAY ms.
         // use this space to update the state of your game or animation
-        // before the graphics are redrawn.
+        // before the graphics are redrawn
+        
+        dot = ((Dice) getRootPane().getContentPane().getComponent(1)).getDot();
 
         // prevent the player from disappearing off the board
         player.tick();
+
+        player.tick2(dot);
 
         // give the player points for collecting coins
         collectCoins();
@@ -54,6 +59,8 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         // calling repaint() will trigger paintComponent() to run again,
         // which will refresh/redraw the graphics.
         repaint();
+
+        ((Dice) getRootPane().getContentPane().getComponent(1)).initDot();
     }
 
     @Override
@@ -109,6 +116,21 @@ public class Board extends JPanel implements ActionListener, KeyListener {
                 }
             }    
         }
+
+        g.setColor(new Color(53, 128, 48));
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLUMNS; col++) {
+                if (row != 0 && col != 0 && row != ROWS-1 && col != COLUMNS-1) {
+                    g.fillRect(
+                        col * TILE_SIZE, 
+                        row * TILE_SIZE, 
+                        TILE_SIZE, 
+                        TILE_SIZE
+                    );
+                }
+            }    
+        }
+
     }
 
     private void drawScore(Graphics g) {

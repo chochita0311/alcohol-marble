@@ -85,7 +85,45 @@ public class Player {
         } else if (pos.y >= Board.ROWS) {
             pos.y = Board.ROWS - 1;
         }
+        // // move only in spiaral ways
+        // if(pos.y == 0 & pos.x < Board.COLUMNS) {
+        //     pos.y = 0;
+        // }
     }
+
+    public void tick2(int dot) {
+
+        if(dot != 0) {
+
+            if (pos.y == 0 && pos.x < Board.COLUMNS - 1) {
+                pos.translate(dot, 0);
+                if (pos.x > Board.COLUMNS - 1) {
+                    pos.translate(0, pos.x - Board.COLUMNS + 1);
+                }
+            }
+            else if (pos.x == Board.COLUMNS - 1 && pos.y < Board.ROWS - 1) {
+                pos.translate(0, dot);
+                if (pos.y > Board.ROWS - 1) {
+                    pos.translate(-pos.y + Board.ROWS - 1, 0);
+                }
+            }
+            else if (pos.y == Board.ROWS - 1 && pos.x > 0) {
+                pos.translate(-dot, 0);
+                if (pos.x < 0) {
+                    pos.translate(0, pos.x);
+                }
+            }
+            else if (pos.x == 0 && pos.y > 0) {
+                pos.translate(0, -dot);
+                if (pos.y < 0) {
+                    pos.translate(-pos.y, 0);
+                }
+            }
+        }
+
+    }
+
+
 
     public String getScore() {
         return String.valueOf(score);
