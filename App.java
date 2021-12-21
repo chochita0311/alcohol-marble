@@ -23,18 +23,15 @@ class App {
         // board.setFocusable(true);
         // add the jpanel to the window
 
-        Dice dice = new Dice();
-        
-        // mainPanel.add(board);
-        // mainPanel.add(b1);
+        Board2 board2 = new Board2();
+        board2.setLayout(null);
+
         contentPane.add(board);
-        contentPane.add(dice);
+        contentPane.add(board2);
 
         contentPane.requestFocusInWindow();
-        contentPane.addKeyListener(board);
-        // contentPane.addMouseListener(dice);
-        
-        
+        // contentPane.addKeyListener(board);
+
         // window.add(mainPanel);
 
 

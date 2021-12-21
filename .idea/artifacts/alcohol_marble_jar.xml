@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="alcohol-marble:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/alcohol_marble_jar</output-path>
+    <root id="archive" name="alcohol-marble.jar">
+      <element id="module-output" name="alcohol-marble" />
+    </root>
+  </artifact>
+</component>
