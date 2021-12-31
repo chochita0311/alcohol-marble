@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.font.*;
 import java.util.Random;
 
 public class Board2 extends JPanel implements ActionListener {
@@ -8,22 +9,39 @@ public class Board2 extends JPanel implements ActionListener {
     private long seed = System.currentTimeMillis();
     private Random rand = new Random(seed);
 
-    private int dotSize;
-    private int margin;
+    // controls the size of the dice
+    private int dotSize = 30;
+    private int margin = 15;
 
     private int dot1;
     private int dot2;
 
-    public Board2() {
+    public JTextField luckyMessageBox = new JTextField();
 
+    public Board2() {
         JButton rollButton = new JButton("Roll!");
         rollButton.setBounds((750 - 150) / 2, 300, 150, 50);
         rollButton.addActionListener(this);
         add(rollButton);
 
-        dotSize = 30;
-        margin = 15;
+        Font font = new Font("BRLNSDB", Font.BOLD, 20);
 
+        luckyMessageBox.setBounds((750 - 300) / 2, 500, 300, 100);
+        luckyMessageBox.setBackground(Color.white);
+        luckyMessageBox.setFont(font);
+        luckyMessageBox.setHorizontalAlignment(JTextField.CENTER);
+        luckyMessageBox.setEditable(false);
+        add(luckyMessageBox);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        dot1 = rand.nextInt(6) + 1;
+        dot2 = rand.nextInt(6) + 1;
+
+        repaint();
+        // System.out.println(((Board) getRootPane().getContentPane().getComponent(0)).player.getPos());
+        getRootPane().getContentPane().requestFocusInWindow();
     }
 
     @Override
@@ -33,16 +51,8 @@ public class Board2 extends JPanel implements ActionListener {
         drawDice(750 / 2 - dotSize * 3 - 40 - margin * 2 - margin, 150, dotSize, dot1, margin, g);
         drawDice(750 / 2 + margin, 150, dotSize, dot2, margin, g);
 
+        // this smooths out animations on some systems
         Toolkit.getDefaultToolkit().sync();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        dot1 = rand.nextInt(6) + 1;
-        dot2 = rand.nextInt(6) + 1;
-
-        repaint();
-        getRootPane().getContentPane().requestFocusInWindow();
     }
 
     private void drawDice(int x, int y, int dotSize, int dot, int margin, Graphics g) {
@@ -73,6 +83,10 @@ public class Board2 extends JPanel implements ActionListener {
     public void initDot() {
         dot1 = 0;
         dot2 = 0;
+    }
+
+    public void showLuckyMessage() {
+        luckyMessageBox.setText("제발 집으로 가시오");
     }
 
 }
